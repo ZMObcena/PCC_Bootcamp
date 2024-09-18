@@ -1,32 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class Interactable : MonoBehaviour
+public abstract class Interactable : MonoBehaviour
 {
-    Outline outline;
-
-    public UnityEvent onInteraction;
-
-    void Start()
+    public virtual void Awake()
     {
-        outline = GetComponent<Outline>();
-        DisableOutline();
+        this.gameObject.layer = 7;
     }
+    public abstract void OnInteract();
+    public abstract void OnFocus();
+    public abstract void OnLoseFocus();
 
-    public void Interact()
+    public void EnableOutline()
     {
-        onInteraction.Invoke();
+
     }
 
     public void DisableOutline()
     {
-        outline.enabled = false;
-    }
 
-    public void EnableOutline()
-    {
-        outline.enabled = true;
     }
 }
