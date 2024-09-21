@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LightController : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class LightController : MonoBehaviour
 
     int useCounter;
     bool isActive;
+
+    public NavMeshAgent enemyNavMeshAgent; 
+    private bool enemyIsStopped = false;
 
     void Start()
     {
@@ -51,6 +55,11 @@ public class LightController : MonoBehaviour
                 if(Physics.Raycast(transform.position, enemyTarget, distanceToTarget, obstacleMask) == false)
                 {
                     Debug.Log("Enemy is in light radius.");
+
+                    if (!enemyIsStopped)  
+                    {
+                        StartCoroutine(StopEnemyMovement());
+                    }
                 }
             }
         }
@@ -77,5 +86,26 @@ public class LightController : MonoBehaviour
         {
             Debug.Log("Light is currently active.");
         }
+    }
+
+    IEnumerator StopEnemyMovement()
+    {
+        enemyIsStopped = true;  
+
+        if (enemyNavMeshAgent != null)
+        {
+            enemyNavMeshAgent.isStopped = true;
+        }
+
+ 
+        yield return new WaitForSeconds(10f);
+
+
+        if (enemyNavMeshAgent != null)
+        {
+            enemyNavMeshAgent.isStopped = false;
+        }
+
+        enemyIsStopped = false;  
     }
 }

@@ -7,15 +7,11 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] float playerReach;
     Interactable currentInteractable;
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         CheckInteraction();
     }
+
     void CheckInteraction()
     {
         RaycastHit hit;
